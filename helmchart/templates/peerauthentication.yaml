@@ -1,0 +1,15 @@
+{{- if .Values.virtualService.http.enabled }}
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: {{ include "helmchart.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helmchart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "helmchart.selectorLabels" . | nindent 6 }}
+  mtls:
+    mode: STRICT
+{{- end }}

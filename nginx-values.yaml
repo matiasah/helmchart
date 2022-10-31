@@ -1,0 +1,86 @@
+deployment:
+  annotations:
+    a: "b"
+  labels:
+    c: "d"
+
+pod:
+  annotations:
+    a: "b"
+  labels:
+    c: "d"
+
+virtualService:
+  hosts:
+  - "localhost"
+  - "host.docker.internal"
+  gateways:
+  - "gateway/istio-ingressgateway"
+  http:
+    enabled: true
+    destinations:
+    - name: http
+      prefix: "/test/"
+      rewrite: "/"
+      port: 80
+      weight: 100
+    requestAuthentication:
+      enabled: true
+      jwtRules:
+      - issuer: "https://accounts.google.com"
+        jwksUri: "https://www.googleapis.com/oauth2/v3/certs"
+    authorizationPolicy:
+      enabled: true
+      rules:
+      - from:
+        - source:
+            requestPrincipals:
+            - "*"
+        to:
+        - operation:
+            methods:
+            - "GET"
+            paths:
+            - "/healthz"
+      - from:
+        - source:
+            requestPrincipals:
+            - "*"
+        to:
+        - operation:
+            methods:
+            - "*"
+
+service:
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+
+containers:
+- name: nginx
+  image: "nginx:latest"
+  imagePullPolicy: "Always"
+  ports:
+  - name: http
+    containerPort: 80
+    protocol: TCP
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  env:
+    ABC: "TEST"
+    WASD: "TEST2"

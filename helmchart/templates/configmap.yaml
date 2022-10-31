@@ -1,0 +1,14 @@
+{{- range $container := .Values.containers }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-%s" ( include "helmchart.fullname" $ ) .name }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "helmchart.labels" $ | nindent 4 }}
+data:
+  {{- range $key, $val := .env }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}
+{{- end }}

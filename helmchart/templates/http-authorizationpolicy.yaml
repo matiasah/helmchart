@@ -1,0 +1,18 @@
+{{- if and (.Values.virtualService.http.enabled) (.Values.virtualService.http.authorizationPolicy.enabled) }}
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ include "helmchart.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helmchart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "helmchart.selectorLabels" . | nindent 6 }}
+  action: ALLOW
+  {{- with .Values.virtualService.http.authorizationPolicy.rules }}
+  rules:
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
+{{- end }}

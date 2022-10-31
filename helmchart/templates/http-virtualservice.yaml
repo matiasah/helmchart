@@ -1,0 +1,36 @@
+{{- if .Values.virtualService.http.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ printf "%s-http" ( include "helmchart.fullname" . ) }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helmchart.labels" . | nindent 4 }}
+spec:
+{{- with .Values.virtualService.hosts }}
+  hosts:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+{{- with .Values.virtualService.gateways }}
+  gateways:
+  {{- toYaml . | nindent 2 }}
+{{- end }}
+  http:
+  {{- range $destination := .Values.virtualService.http.destinations }}
+  - name: {{ .name | quote }}
+    match:
+    - uri:
+        prefix: {{ .prefix | quote }}
+    {{- with .rewrite }}
+    rewrite:
+      uri: {{ . | quote }}
+    {{- end }}
+    route:
+    - destination:
+        host: {{ ( printf "%s.%s.svc.cluster.local" ( include "helmchart.fullname" $ ) $.Release.Namespace ) | quote }}
+        port:
+          number: {{ .port }}
+        subset: "http"
+      weight: {{ .weight }}
+  {{- end }}
+{{- end }}

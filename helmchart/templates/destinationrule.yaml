@@ -1,0 +1,18 @@
+{{- if .Values.virtualService.http.enabled }}
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ include "helmchart.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helmchart.labels" . | nindent 4 }}
+spec:
+  host: {{ ( printf "%s.%s.svc.cluster.local" ( include "helmchart.fullname" $ ) $.Release.Namespace ) | quote }}
+  trafficPolicy:
+    tls:
+      mode: "ISTIO_MUTUAL"
+  subsets:
+  - name: "http"
+    labels:
+      {{- include "helmchart.selectorLabels" . | nindent 6 }}
+{{- end }}
