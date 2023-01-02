@@ -44,6 +44,8 @@ virtualService:
     requestAuthentication:
       enabled: false
       jwtRules: []
+    podMonitor:
+      enabled: false
 
 service:
   type: ClusterIP

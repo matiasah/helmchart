@@ -29,7 +29,7 @@ spec:
     - destination:
         host: {{ ( printf "%s.%s.svc.cluster.local" ( include "helmchart.fullname" $ ) $.Release.Namespace ) | quote }}
         port:
-          number: {{ .port }}
+          number: {{ .targetPort }}
         subset: "http"
       weight: {{ .weight }}
   {{- end }}

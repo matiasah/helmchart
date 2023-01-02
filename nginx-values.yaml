@@ -23,14 +23,17 @@ virtualService:
       prefix: "/test/"
       rewrite: "/"
       port: 80
+      targetPort: 80
       weight: 100
-    requestAuthentication:
+    podMonitor:
       enabled: true
+    requestAuthentication:
+      enabled: false
       jwtRules:
       - issuer: "https://accounts.google.com"
         jwksUri: "https://www.googleapis.com/oauth2/v3/certs"
     authorizationPolicy:
-      enabled: true
+      enabled: false
       rules:
       - from:
         - source:

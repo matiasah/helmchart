@@ -2,7 +2,7 @@
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
 metadata:
-  name: {{ include "helmchart.fullname" . }}
+  name: {{ printf "%s-http" ( include "helmchart.fullname" . ) }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "helmchart.labels" . | nindent 4 }}

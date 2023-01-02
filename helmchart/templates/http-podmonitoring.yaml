@@ -1,0 +1,21 @@
+{{- if and (.Values.virtualService.http.enabled) (.Values.virtualService.http.podMonitor.enabled) }}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ printf "%s-http" ( include "helmchart.fullname" . ) }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "helmchart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "helmchart.selectorLabels" . | nindent 6 }}
+  podMetricsEndpoints:
+  - port: "http-envoy-prom"
+    path: "/stats/prometheus"
+    scheme: "http"
+    interval: "15s"
+  {{- with .Values.virtualService.http.podMonitor.podMetricsEndpoints -}}
+    {{ toYaml . | nindent 4 }}
+  {{- end -}}
+{{- end }}
