@@ -14,6 +14,7 @@ virtualService:
   hosts:
   - "localhost"
   - "host.docker.internal"
+  - "matiasah.ddns.net"
   gateways:
   - "gateway/istio-ingressgateway"
   http:
@@ -87,3 +88,11 @@ containers:
   env:
     ABC: "TEST"
     WASD: "TEST2"
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 100
+  # targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+  targetRequestsPerSecond: 10
