@@ -16,6 +16,12 @@ pipeline {
                 ttyEnabled true
                 command 'cat'
             }
+            containerTemplate {
+                name 'kubectl'
+                image 'bitnami/kubectl:latest'
+                ttyEnabled true
+                command 'cat'
+            }
         }
     }
 
