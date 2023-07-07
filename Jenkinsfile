@@ -16,11 +16,15 @@ pipeline {
 
             steps {
 
-                script {
+                container ("helm") {
 
-                    sh "helm template nginx ./helmchart -n ${NAMESPACE} -f ${VALUES_YAML} ${env.DEBUG ? "--debug" : ""} > template.yaml"
-                    sh "cat template.yaml"
+                    script {
     
+                        sh "helm template nginx ./helmchart -n ${NAMESPACE} -f ${VALUES_YAML} ${env.DEBUG ? "--debug" : ""} > template.yaml"
+                        sh "cat template.yaml"
+        
+                    }
+
                 }
 
             }
