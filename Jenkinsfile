@@ -58,7 +58,7 @@ pipeline {
 
             steps {
 
-                container ("helm") {
+                container ("kubectl") {
 
                     script {
 
