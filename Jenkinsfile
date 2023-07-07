@@ -8,20 +8,27 @@ pipeline {
     }
 
     agent {
-        //label "jenkins-jenkins-agent"
         kubernetes {
-            containerTemplate {
-                name 'helm'
-                image 'alpine/helm:latest'
-                ttyEnabled true
-                command 'cat'
-            }
-            containerTemplate {
-                name 'kubectl'
-                image 'bitnami/kubectl:latest'
-                ttyEnabled true
-                command 'cat'
-            }
+            yaml """
+                apiVersion: "v1"
+                kind: "Pod"
+                spec:
+                  containers:
+                  - command:
+                    - "cat"
+                    image: "alpine/helm:latest"
+                    imagePullPolicy: "IfNotPresent"
+                    name: "helm"
+                    resources: {}
+                    tty: true
+                  - command:
+                    - "cat"
+                    image: "bitnami/kubectl:latest"
+                    imagePullPolicy: "IfNotPresent"
+                    name: "kubectl"
+                    resources: {}
+                    tty: true
+            """
         }
     }
 
