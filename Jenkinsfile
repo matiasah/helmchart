@@ -8,17 +8,15 @@ pipeline {
     }
 
     agent {
-        label "jenkins-jenkins-agent"
-        /**
+        //label "jenkins-jenkins-agent"
         kubernetes {
             containerTemplate {
                 name 'helm'
-                image 'lachlanevenson/k8s-helm:v3.1.1'
+                image 'alpine/helm:latest'
                 ttyEnabled true
                 command 'cat'
             }
         }
-        **/
     }
 
     stages {
