@@ -8,6 +8,8 @@ pipeline {
     }
 
     agent {
+        label "jenkins-jenkins-agent"
+        /**
         kubernetes {
             containerTemplate {
                 name 'helm'
@@ -16,6 +18,7 @@ pipeline {
                 command 'cat'
             }
         }
+        **/
     }
 
     stages {
