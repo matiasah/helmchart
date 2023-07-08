@@ -78,7 +78,7 @@ pipeline {
                     script {
 
                         // Configure cacert
-                        sh "kubectl config set-cluster docker-desktop --server=https://kubernetes.default:443 --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+                        //sh "kubectl config set-cluster docker-desktop --server=https://kubernetes.default:443 --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 
                         // Configure token
                         sh "kubectl config set-credentials jenkins --token=\$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"
