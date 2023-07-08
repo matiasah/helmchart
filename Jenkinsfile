@@ -28,6 +28,9 @@ pipeline {
                     name: "kubectl"
                     resources: {}
                     tty: true
+                    env:
+                    - name: HTTPS_PROXY
+                      value: "https://kubernetes.default:443"
                   serviceAccountName: jenkins
             """
         }
