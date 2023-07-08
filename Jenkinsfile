@@ -53,7 +53,7 @@ pipeline {
                     name: "kubectl"
                     resources: {}
                     tty: true
-                  serviceAccountName: jenkins
+                  serviceAccountName: jenkins-slave
             """
         }
     }
