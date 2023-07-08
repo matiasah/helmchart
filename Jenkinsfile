@@ -76,6 +76,8 @@ pipeline {
 
                     script {
 
+                        sh "cat /var/run/secrets/kubernetes.io/serviceaccount/token"
+
                         // Deploy manifest
                         sh "kubectl apply -f template.yaml"
 
