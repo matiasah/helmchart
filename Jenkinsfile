@@ -21,9 +21,7 @@ pipeline {
                     name: "helm"
                     resources: {}
                     tty: true
-                  - command:
-                    - "cat"
-                    image: "bitnami/kubectl:latest"
+                  - image: "bitnami/kubectl:latest"
                     imagePullPolicy: "IfNotPresent"
                     name: "kubectl"
                     resources: {}
@@ -31,6 +29,7 @@ pipeline {
                     env:
                     - name: HTTPS_PROXY
                       value: "https://kubernetes.default:443"
+                    entrypoint: [""]
                   serviceAccountName: jenkins
             """
         }
@@ -77,6 +76,8 @@ pipeline {
                     script {
 
                         sh "cat /var/run/secrets/kubernetes.io/serviceaccount/token"
+
+                        sh "kubectl config set-cluster my-cluster --server=https://<api-server-address> --certificate-authority=/kubeconfig/ca.crt"
 
                         // Deploy manifest
                         sh "kubectl apply -f template.yaml"
