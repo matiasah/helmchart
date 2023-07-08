@@ -74,11 +74,13 @@ pipeline {
 
                     script {
 
+                        echo "cat"
                         sh "cat /var/run/secrets/kubernetes.io/serviceaccount/token"
 
                         //sh "kubectl config set-cluster docker-desktop --server=https://kubernetes.default:443 --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 
                         // Deploy manifest
+                        echo "kubectl"
                         sh "kubectl apply -f template.yaml"
 
                     }
