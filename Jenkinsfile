@@ -22,7 +22,7 @@ pipeline {
                     resources: {}
                     tty: true
                   - command:
-                    - "sleep infinity"
+                    - "cat"
                     image: "bitnami/kubectl:latest"
                     imagePullPolicy: "IfNotPresent"
                     name: "kubectl"
