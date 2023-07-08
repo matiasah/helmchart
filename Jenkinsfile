@@ -22,11 +22,12 @@ pipeline {
                     resources: {}
                     tty: true
                   - command:
-                    - "sleep infinity"
+                    - "cat"
                     image: "bitnami/kubectl:latest"
                     imagePullPolicy: "IfNotPresent"
                     name: "kubectl"
                     resources: {}
+                    tty: true
                   serviceAccountName: jenkins
             """
         }
