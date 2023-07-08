@@ -14,9 +14,9 @@ pipeline {
                 kind: "Pod"
                 spec:
                   securityContext:
-                    runAsUser: 1099
-                    runAsGroup: 1099
-                    fsGroup: 1099
+                    runAsUser: 1001
+                    runAsGroup: 1001
+                    fsGroup: 1001
                   containers:
                   - command:
                     - "cat"
