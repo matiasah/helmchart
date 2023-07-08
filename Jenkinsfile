@@ -41,8 +41,11 @@ pipeline {
                 container ("helm") {
 
                     script {
-    
+
+                        // Template Helm chart
                         sh "helm template nginx ./helmchart -n ${NAMESPACE} -f ${VALUES_YAML} ${env.DEBUG ? "--debug" : ""} > template.yaml"
+
+                        // Log Helm chart manifest
                         sh "cat template.yaml"
         
                     }
@@ -69,6 +72,7 @@ pipeline {
 
                     script {
 
+                        // Deploy manifest
                         sh "kubectl apply -f template.yaml"
 
                     }
