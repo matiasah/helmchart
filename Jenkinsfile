@@ -26,9 +26,6 @@ pipeline {
                     name: "kubectl"
                     resources: {}
                     tty: true
-                    env:
-                    - name: HTTPS_PROXY
-                      value: "https://kubernetes.default:443"
                     entrypoint: [""]
                   serviceAccountName: jenkins
             """
@@ -77,7 +74,7 @@ pipeline {
 
                         sh "cat /var/run/secrets/kubernetes.io/serviceaccount/token"
 
-                        sh "kubectl config set-cluster my-cluster --server=https://<api-server-address> --certificate-authority=/kubeconfig/ca.crt"
+                        //sh "kubectl config set-cluster docker-desktop --server=https://kubernetes.default:443 --certificate-authority=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt"
 
                         // Deploy manifest
                         sh "kubectl apply -f template.yaml"
