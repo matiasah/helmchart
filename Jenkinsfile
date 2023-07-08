@@ -27,7 +27,6 @@ pipeline {
                     imagePullPolicy: "IfNotPresent"
                     name: "kubectl"
                     resources: {}
-                    tty: true
                     entrypoint: [""]
                   serviceAccountName: jenkins
             """
