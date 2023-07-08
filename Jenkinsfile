@@ -13,6 +13,10 @@ pipeline {
                 apiVersion: "v1"
                 kind: "Pod"
                 spec:
+                  securityContext:
+                    runAsUser: 1099
+                    runAsGroup: 1099
+                    fsGroup: 1099
                   containers:
                   - command:
                     - "cat"
