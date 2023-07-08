@@ -28,6 +28,7 @@ pipeline {
                     name: "kubectl"
                     resources: {}
                     tty: true
+                serviceAccount: jenkins
             """
         }
     }
