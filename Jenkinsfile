@@ -21,7 +21,9 @@ pipeline {
                     name: "helm"
                     resources: {}
                     tty: true
-                  - image: "bitnami/kubectl:latest"
+                  - command:
+                    - "cat"
+                    image: "bitnami/kubectl:latest"
                     imagePullPolicy: "IfNotPresent"
                     name: "kubectl"
                     resources: {}
